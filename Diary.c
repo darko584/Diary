@@ -10,12 +10,12 @@ typedef struct Diary{
    char note[1];
 }S ;
 
+int count=0;
 FILE *fp0;
 S g[10],*gptr;
 S r,*ptr;
 
 S Newrecord(S *w);
-void viewrecord();
 void editrecord();
 void addrecord();
 void searchrecord();
@@ -23,11 +23,18 @@ void delete();
 void addpassword();
 void additionalrecord(FILE *fp1);
 
+void viewrecord()
+{
+  printf("The number of records currently present : %d\n",count);
+}
+
 void choice()
 {
   printf("Enter a number :\
-  1--To add a new record\t\
-  2--To append in the existing record : ");
+  1--To add a new record :\t\
+  2--To append in the existing record\t\
+  3--To exit :\t\
+  4--To view the total no of records : ");
   int d;
   scanf("%d",&d);
   switch(d)
@@ -37,6 +44,12 @@ void choice()
       break;
     case 2:
       addrecord();
+      break;
+    case 3:
+      exit(0);
+      break;
+    case 4:
+      viewrecord();
       break;
     default:
       printf("Wrong number choice\n");
@@ -64,6 +77,7 @@ scanf(" %[^\n]s",w->time);
 printf("Note: ");
 scanf(" %[^\n]s",w->note);
 fprintf(fp0,"%s\t%s\t%s\n%s",w->name,w->date,w->time,w->note);
+count++;
 fclose(fp0);
 choice();
 
@@ -83,6 +97,7 @@ void addrecord ()
     printf("Note: ");
     scanf(" %[^\n]s",gptr->note);
     fprintf(fp0,"%s\t%s\t%s\t",gptr->date,gptr->time,gptr->note);
+    count++;
   additionalrecord(fp0);
   fclose(fp0);
   choice();
@@ -108,6 +123,7 @@ void additionalrecord(FILE *fp1)
     printf("Note: ");
     scanf(" %[^\n]s",gptr->note);
     fprintf(fp1,"%s\t%s\t%s\t",gptr->date,gptr->time,gptr->note);
+    count++;
     gptr++;
   }
 }
