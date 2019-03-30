@@ -10,6 +10,7 @@ typedef struct Diary{
    char note[1];
 }S ;
 
+FILE *fp0;
 S g[10],*gptr;
 S r,*ptr;
 
@@ -53,6 +54,7 @@ int main()
 
 S Newrecord(S *w)
 {
+fp0=fopen("/Users/mac/documents/Diary_1.txt","w");
 printf("Enter the name of the owner\n");
 scanf(" %[^\n]%*c",w->name);
 printf("Current Date : mm-dd-yyyy\n");
@@ -61,6 +63,8 @@ printf("Current Time : 00:00:00\n");
 scanf(" %[^\n]s",w->time);
 printf("Note: ");
 scanf(" %[^\n]s",w->note);
+fprintf(fp0,"%s\t%s\t%s\n%s",w->name,w->date,w->time,w->note);
+fclose(fp0);
 choice();
 
 //while(scanf(" %[^\n]%*c",w->note)==1){
@@ -71,17 +75,16 @@ choice();
 void addrecord ()
 {
   int i;
-  FILE *fp;
-  fp=fopen("/Users/mac/documents/Diary_1.txt","w");
+  fp0=fopen("/Users/mac/documents/Diary_1.txt","a");
     printf("Current Date : mm-dd-yyyy\n");
     scanf(" %[^\n]s",gptr->date);
     printf("Current Time : 00:00:00\n");
     scanf(" %[^\n]s",gptr->time);
     printf("Note: ");
     scanf(" %[^\n]s",gptr->note);
-    fprintf(fp,"%s\t%s\t%s\t",gptr->date,gptr->time,gptr->note);
-  additionalrecord(fp);
-  fclose(fp);
+    fprintf(fp0,"%s\t%s\t%s\t",gptr->date,gptr->time,gptr->note);
+  additionalrecord(fp0);
+  fclose(fp0);
   choice();
 }
 
@@ -90,12 +93,12 @@ void additionalrecord(FILE *fp1)
   //fp1=fopen("")
   char ch;
   int i,n;
-
-  printf("GIVE a yes for y\n");
+  printf("Do you want to add more records: ");
+  printf("GIVE a Y or y for yes\n");
   scanf(" %c",&ch);
-  printf("How amy times\n");
-  scanf("%d",&n);
-  if(ch=='Y'&&ch=='y'){
+  if(ch=='Y'|| ch=='y'){
+    printf("How many records do you want to add (MAX 10)\n");
+    scanf(" %d",&n);
   for(i=0;i<n;i++)
   {
     printf("Current Date : mm-dd-yyyy\n");
