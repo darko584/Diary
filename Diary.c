@@ -153,6 +153,7 @@ void reader()
 
 
   searchrecord();
+  fclose(fp0);//correction
 }
 void searchrecord()
 {
